@@ -12,15 +12,14 @@ namespace Pool
         
         public void HideObject(TData obj)
         {
+            // Решение с помощью которого можно избавиться от лишней переменной (tempLength)
             if (UsedObjects.Contains(obj) == false)
             {
                 return;
             }
             
-            var steps = UsedObjects.Count;
-            while (UsedObjects.Count > 0 && steps > 0)
+            while (UsedObjects.Count > 0)
             {
-                steps--;
                 var selectedObject = UsedObjects.Dequeue();
                 if (selectedObject.Equals(obj))
                 {
