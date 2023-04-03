@@ -7,8 +7,6 @@ namespace Projectile
 {
     public class Projectile : MonoBehaviour, IPoolObject
     {
-        public ProjectileType Type => ProjectileType.Default;
-        
         [SerializeField] private float _speed;
 
         private Vector3 _direction;

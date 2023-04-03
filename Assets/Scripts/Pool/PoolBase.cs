@@ -3,12 +3,36 @@ using System.Collections.Generic;
 
 namespace Pool
 {
-    public abstract class PoolBase<TData, TType> where TData: IPoolObject where TType: Enum
+    public abstract class PoolBase<TData> where TData: IPoolObject
     {
         protected readonly Queue<TData> UsedObjects = new Queue<TData>();
         protected readonly Queue<TData> UnusedObjects = new Queue<TData>();
 
-        public abstract TData GetOrCreateObject(TType typeObj);
+        public abstract TData GetOrCreateObject();
+        
+        public void HideObject(TData obj)
+        {
+            if (UsedObjects.Contains(obj) == false)
+            {
+                return;
+            }
+            
+            var steps = UsedObjects.Count;
+            while (UsedObjects.Count > 0 && steps > 0)
+            {
+                steps--;
+                var selectedObject = UsedObjects.Dequeue();
+                if (selectedObject.Equals(obj))
+                {
+                    selectedObject.Hide();
+                    UnusedObjects.Enqueue(selectedObject);
+                    break;
+                }
+            
+                UsedObjects.Enqueue(selectedObject);
+            }
+        }
+        
         
         public void HideAllObjects()
         {

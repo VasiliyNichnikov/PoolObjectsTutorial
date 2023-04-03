@@ -14,14 +14,9 @@ namespace Projectile
 
         public void LaunchProjectile(Vector3 startPosition, Vector3 direction)
         {
-            var projectile = _pool.GetOrCreateObject(ProjectileType.Default);
+            var projectile = _pool.GetOrCreateObject();
             projectile.transform.position = startPosition;
-            projectile.Init(direction, () => HideProjectile(projectile));
-        }
-
-        private void HideProjectile(Projectile projectile)
-        {
-            _pool.HideProjectile(projectile);
+            projectile.Init(direction, () => _pool.HideObject(projectile));
         }
     }
 }
